@@ -419,8 +419,8 @@ def send_message(request, conversation_id):
         return redirect('conversation', conversation_id=conversation_id)
 
 def chat_list_view(request):
-    conversations = Conversation.objects.filter(participants=request.user.id)
-    return render(request, 'chat_list.html', {'conversations': conversations})
+    #conversations = Conversation.objects.filter(participants=request.user.id)
+    return render(request, 'auctions/chat/chat_list.html', {'conversations': conversations})
 
 def chat_detail_view(request, conversation_id):
     conversation = get_object_or_404(Conversation, id=conversation_id)
@@ -436,4 +436,4 @@ def chat_detail_view(request, conversation_id):
             message.save()
             return redirect('chat_detail', conversation_id=conversation.id)
     
-    return render(request, 'chat_detail.html', {'conversation': conversation, 'messages': messages, 'form': form})
+    return render(request, 'auctions/chat/chat_detail.html', {'conversation': conversation, 'messages': messages, 'form': form})
