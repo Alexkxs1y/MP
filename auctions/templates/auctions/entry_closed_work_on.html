@@ -1,0 +1,69 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}   
+<div class="dataentry">
+    <h1> {{entry.listing_title}}</h1>
+    {% if status == "owner" %}
+    <p> You SOLD this to {{entry.winnerid}} by ${{entry.current_price}}</p>  
+    {% endif %}
+    {% if status == "winner" %}
+    <p> You WON this by ${{entry.current_price}}</p> 
+    {% endif %} 
+    {% if status == "other" %}
+    <p> SOLD</p> 
+    {% endif %}  
+    
+    
+    <form action="" method="POST"> 
+        {% csrf_token %}         
+        
+        {% if watchlist %}
+        <input type="hidden" name="whatchlist" value="0">
+        <input type="submit" value="add to watchlist" disabled>
+        <input type="submit" value="remove from watchlist">
+        {% else %}
+        <input type="hidden" name="whatchlist" value="1">
+        <input type="submit" value="add to watchlist">
+        <input type="submit" value="remove from watchlist" disabled>
+        {% endif %}
+    </form>   
+
+
+
+        <img  src="{{entry.picture.url}}" alt="picture">
+        <p> Description: <i>{{entry.listing_description}}</i></p>        
+            
+            <p class="bid"> Starting Price: ${{entry.starting_bid}}</p>
+            
+            <p class="bid"> Final Price: ${{entry.current_price}}</p>
+
+            <p> Category:</p> 
+            <ul>
+                {% for category in categories %}
+                <li>
+                    {{category.category}}
+                </li>
+                {% endfor %}
+            </ul>    
+            <p> </p>
+
+
+            <p> Created on {{entry.created}} by {{entry.ownerid}}</p> 
+            
+            <p> Comments:</p>
+            <ul>
+                {% for comment in comments %}
+                <li class="nostyletype">
+                    <p> <b>{{comment.userid}} on {{comment.created}} said:</b></p>                
+                    <p> <i>{{comment.comment}} </i></p>                
+                </li>
+                {% endfor %}
+            </ul>
+
+        </div>          
+        
+    
+
+
+
+{% endblock %}
