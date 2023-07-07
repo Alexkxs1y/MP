@@ -1,0 +1,13 @@
+{% extends 'auctions/base.html' %}
+
+{% block content %}
+  <h1>Chat List</h1>
+  
+  <ul>
+    {% for conversation in conversations %}
+      <li><a href="{% url 'chat_detail' conversation.id %}">Conversation {{ conversation.id }}</a></li>
+    {% empty %}
+      <li>No conversations available.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

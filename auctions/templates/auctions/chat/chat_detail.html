@@ -1,0 +1,23 @@
+{% extends 'auctions/base.html' %}
+
+{% block content %}
+  <h1>Chat Detail</h1>
+  
+  <h2>Conversation ID: {{ conversation.id }}</h2>
+  
+  <h3>Messages:</h3>
+  <ul>
+    {% for message in messages %}
+      <li>{{ message.content }} - {{ message.sender }}</li>
+    {% empty %}
+      <li>No messages available.</li>
+    {% endfor %}
+  </ul>
+  
+  <h3>Send Message:</h3>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Send</button>
+  </form>
+{% endblock %}
