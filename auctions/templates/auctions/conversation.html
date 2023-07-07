@@ -1,0 +1,11 @@
+<h2>{{ conversation }}</h2>
+{% for message in messages %}
+    <p>{{ message.sender.username }}: {{ message.content }}</p>
+{% empty %}
+    <p>No messages in this conversation.</p>
+{% endfor %}
+<form method="POST" action="{% url 'send_message' conversation_id=conversation.id %}">
+    {% csrf_token %}
+    <textarea name="content"></textarea>
+    <button type="submit">Send</button>
+</form>

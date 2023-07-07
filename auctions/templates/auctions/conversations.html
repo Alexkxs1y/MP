@@ -1,0 +1,5 @@
+{% for conversation in conversations %}
+    <a href="{% url 'conversation' conversation_id=conversation.id %}">{{ conversation }}</a>
+{% empty %}
+    <p>No conversations found.</p>
+{% endfor %}

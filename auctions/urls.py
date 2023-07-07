@@ -17,5 +17,8 @@ urlpatterns = [
     path("my_watchlist", views.my_watchlist, name="my_watchlist"),
     path("categories", views.categories, name="categories"),
     path("category_listings/<int:categoryid>", views.category_listings, name="category_listings"),
+    path('conversations/', views.conversations, name='conversations'),
+    path('conversation/<int:conversation_id>/', views.conversation, name='conversation'),
+    path('send_message/<int:conversation_id>/', views.send_message, name='send_message'),
 ]
 

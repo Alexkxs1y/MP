@@ -1,5 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.conf import settings
+from django.contrib.auth.models import User
+
 
 #for timestamp
 from django.utils.timezone import now
@@ -7,6 +10,14 @@ from django.utils.timezone import now
 #for resizing
 from PIL import Image
 
+class Conversation(models.Model):
+    participants = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='conversations')
+
+class Message(models.Model):
+    conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
+    sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
 
 class User(AbstractUser):
     pass
