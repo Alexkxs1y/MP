@@ -5,10 +5,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
+#from django.contrib.auth.decorators import login_required
 
 
 from .models import Conversation, Message
+
+from .forms import MessageForm
 
 from .models import User
 
@@ -414,3 +416,23 @@ def send_message(request, conversation_id):
         content = request.POST['content']
         Message.objects.create(conversation=conversation, sender=sender, content=content)
         return redirect('conversation', conversation_id=conversation_id)
+
+def chat_list_view(request):
+    conversations = Conversation.objects.filter(participants=request.user)
+    return render(request, 'chat_list.html', {'conversations': conversations})
+
+def chat_detail_view(request, conversation_id):
+    conversation = get_object_or_404(Conversation, id=conversation_id)
+    messages = Message.objects.filter(conversation=conversation)
+    form = MessageForm()
+    
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = request.user
+            message.conversation = conversation
+            message.save()
+            return redirect('chat_detail', conversation_id=conversation.id)
+    
+    return render(request, 'chat_detail.html', {'conversation': conversation, 'messages': messages, 'form': form})

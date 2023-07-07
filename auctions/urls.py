@@ -5,6 +5,8 @@ from . import views
 # ofr redirecting if unsigned
 from django.contrib.auth import views as auth_views
 
+#app_name = 'auctions'
+
 urlpatterns = [ 
     path("", views.index, name="index"),
     path("create_listing", views.create_listing, name="create_listing"),    

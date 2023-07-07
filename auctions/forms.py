@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import ModelForm
+from .models import Message
 
 from .models import Auction_listing, Category, Comments, Whatchlist, Bids
 
@@ -45,3 +46,8 @@ class CommentsForm(ModelForm):
                 'placeholder': 'your comments'
                 }),            
                 }     
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['content']

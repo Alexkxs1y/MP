@@ -10,6 +10,7 @@ from django.utils.timezone import now
 #for resizing
 from PIL import Image
 
+
 class Conversation(models.Model):
     participants = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='conversations')
 
